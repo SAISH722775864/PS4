@@ -43,8 +43,8 @@ public class OrdersLineController : ControllerBase, iController<OrdersLine>
     public async Task<IActionResult> Delete(string ID)
     {
         var itm = await _context.OrdersLine.Where(x => x.OrdersLineId == ID).FirstOrDefaultAsync();
-        _context.OrdersLine.Remove(itm);
-        await _context.SaveChangesAsync();
+        _ = _context.OrdersLine.Remove(itm);
+        _ = await _context.SaveChangesAsync();
         return Ok();
     }
 
@@ -63,15 +63,15 @@ public class OrdersLineController : ControllerBase, iController<OrdersLine>
             {
                 itm = _mapper.Map<OrdersLine>(_OrdersLine);
 
-                 /*
-                        itm.OrdersLineFirstName = _OrdersLine.OrdersLineFirstName;
-                        itm.OrdersLineMiddleName = _OrdersLine.OrdersLineMiddleName;
-                        itm.OrdersLineLastName = _OrdersLine.OrdersLineLastName;
-                        itm.OrdersLineDateOfBirth = _OrdersLine.OrdersLineDateOfBirth;
-                        itm.OrdersLineGenderId = _OrdersLine.OrdersLineGenderId;
-                   */      
-                _context.OrdersLine.Update(itm);
-                await _context.SaveChangesAsync();
+                /*
+                       itm.OrdersLineFirstName = _OrdersLine.OrdersLineFirstName;
+                       itm.OrdersLineMiddleName = _OrdersLine.OrdersLineMiddleName;
+                       itm.OrdersLineLastName = _OrdersLine.OrdersLineLastName;
+                       itm.OrdersLineDateOfBirth = _OrdersLine.OrdersLineDateOfBirth;
+                       itm.OrdersLineGenderId = _OrdersLine.OrdersLineGenderId;
+                  */
+                _ = _context.OrdersLine.Update(itm);
+                _ = await _context.SaveChangesAsync();
                 trans.Commit();
 
             }
@@ -94,8 +94,8 @@ public class OrdersLineController : ControllerBase, iController<OrdersLine>
         try
         {
             _OrdersLine.OrdersLineId = Guid.NewGuid().ToString().ToUpper().Replace("-", "");
-            _context.OrdersLine.Add(_OrdersLine);
-            await _context.SaveChangesAsync();
+            _ = _context.OrdersLine.Add(_OrdersLine);
+            _ = await _context.SaveChangesAsync();
             trans.Commit();
         }
         catch (Exception ex)
