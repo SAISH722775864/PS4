@@ -43,8 +43,8 @@ public class CustomerAddressController : ControllerBase, iController<CustomerAdd
     public async Task<IActionResult> Delete(string ID)
     {
         var itm = await _context.CustomerAddress.Where(x => x.CustomerAddressId == ID).FirstOrDefaultAsync();
-        _context.CustomerAddress.Remove(itm);
-        await _context.SaveChangesAsync();
+        _ = _context.CustomerAddress.Remove(itm);
+        _ = await _context.SaveChangesAsync();
         return Ok();
     }
 
@@ -63,15 +63,15 @@ public class CustomerAddressController : ControllerBase, iController<CustomerAdd
             {
                 itm = _mapper.Map<CustomerAddress>(_CustomerAddress);
 
-                 /*
-                        itm.CustomerAddressFirstName = _CustomerAddress.CustomerAddressFirstName;
-                        itm.CustomerAddressMiddleName = _CustomerAddress.CustomerAddressMiddleName;
-                        itm.CustomerAddressLastName = _CustomerAddress.CustomerAddressLastName;
-                        itm.CustomerAddressDateOfBirth = _CustomerAddress.CustomerAddressDateOfBirth;
-                        itm.CustomerAddressGenderId = _CustomerAddress.CustomerAddressGenderId;
-                   */      
-                _context.CustomerAddress.Update(itm);
-                await _context.SaveChangesAsync();
+                /*
+                       itm.CustomerAddressFirstName = _CustomerAddress.CustomerAddressFirstName;
+                       itm.CustomerAddressMiddleName = _CustomerAddress.CustomerAddressMiddleName;
+                       itm.CustomerAddressLastName = _CustomerAddress.CustomerAddressLastName;
+                       itm.CustomerAddressDateOfBirth = _CustomerAddress.CustomerAddressDateOfBirth;
+                       itm.CustomerAddressGenderId = _CustomerAddress.CustomerAddressGenderId;
+                  */
+                _ = _context.CustomerAddress.Update(itm);
+                _ = await _context.SaveChangesAsync();
                 trans.Commit();
 
             }
@@ -94,8 +94,8 @@ public class CustomerAddressController : ControllerBase, iController<CustomerAdd
         try
         {
             _CustomerAddress.CustomerAddressId = Guid.NewGuid().ToString().ToUpper().Replace("-", "");
-            _context.CustomerAddress.Add(_CustomerAddress);
-            await _context.SaveChangesAsync();
+            _ = _context.CustomerAddress.Add(_CustomerAddress);
+            _ = await _context.SaveChangesAsync();
             trans.Commit();
         }
         catch (Exception ex)
