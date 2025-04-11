@@ -43,8 +43,8 @@ public class AddressTypeController : ControllerBase, iController<AddressType>
     public async Task<IActionResult> Delete(string ID)
     {
         var itm = await _context.AddressType.Where(x => x.AddressTypeId == ID).FirstOrDefaultAsync();
-        _context.AddressType.Remove(itm);
-        await _context.SaveChangesAsync();
+        _ = _context.AddressType.Remove(itm);
+        _ = await _context.SaveChangesAsync();
         return Ok();
     }
 
@@ -63,15 +63,15 @@ public class AddressTypeController : ControllerBase, iController<AddressType>
             {
                 itm = _mapper.Map<AddressType>(_AddressType);
 
-                 /*
-                        itm.AddressTypeFirstName = _AddressType.AddressTypeFirstName;
-                        itm.AddressTypeMiddleName = _AddressType.AddressTypeMiddleName;
-                        itm.AddressTypeLastName = _AddressType.AddressTypeLastName;
-                        itm.AddressTypeDateOfBirth = _AddressType.AddressTypeDateOfBirth;
-                        itm.AddressTypeGenderId = _AddressType.AddressTypeGenderId;
-                   */      
-                _context.AddressType.Update(itm);
-                await _context.SaveChangesAsync();
+                /*
+                       itm.AddressTypeFirstName = _AddressType.AddressTypeFirstName;
+                       itm.AddressTypeMiddleName = _AddressType.AddressTypeMiddleName;
+                       itm.AddressTypeLastName = _AddressType.AddressTypeLastName;
+                       itm.AddressTypeDateOfBirth = _AddressType.AddressTypeDateOfBirth;
+                       itm.AddressTypeGenderId = _AddressType.AddressTypeGenderId;
+                  */
+                _ = _context.AddressType.Update(itm);
+                _ = await _context.SaveChangesAsync();
                 trans.Commit();
 
             }
@@ -94,8 +94,8 @@ public class AddressTypeController : ControllerBase, iController<AddressType>
         try
         {
             _AddressType.AddressTypeId = Guid.NewGuid().ToString().ToUpper().Replace("-", "");
-            _context.AddressType.Add(_AddressType);
-            await _context.SaveChangesAsync();
+            _ = _context.AddressType.Add(_AddressType);
+            _ = await _context.SaveChangesAsync();
             trans.Commit();
         }
         catch (Exception ex)
