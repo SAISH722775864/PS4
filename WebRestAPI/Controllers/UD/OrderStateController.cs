@@ -43,8 +43,8 @@ public class OrderStateController : ControllerBase, iController<OrderState>
     public async Task<IActionResult> Delete(string ID)
     {
         var itm = await _context.OrderState.Where(x => x.OrderStateId == ID).FirstOrDefaultAsync();
-        _context.OrderState.Remove(itm);
-        await _context.SaveChangesAsync();
+        _ = _context.OrderState.Remove(itm);
+        _ = await _context.SaveChangesAsync();
         return Ok();
     }
 
@@ -63,15 +63,15 @@ public class OrderStateController : ControllerBase, iController<OrderState>
             {
                 itm = _mapper.Map<OrderState>(_OrderState);
 
-                 /*
-                        itm.OrderStateFirstName = _OrderState.OrderStateFirstName;
-                        itm.OrderStateMiddleName = _OrderState.OrderStateMiddleName;
-                        itm.OrderStateLastName = _OrderState.OrderStateLastName;
-                        itm.OrderStateDateOfBirth = _OrderState.OrderStateDateOfBirth;
-                        itm.OrderStateGenderId = _OrderState.OrderStateGenderId;
-                   */      
-                _context.OrderState.Update(itm);
-                await _context.SaveChangesAsync();
+                /*
+                       itm.OrderStateFirstName = _OrderState.OrderStateFirstName;
+                       itm.OrderStateMiddleName = _OrderState.OrderStateMiddleName;
+                       itm.OrderStateLastName = _OrderState.OrderStateLastName;
+                       itm.OrderStateDateOfBirth = _OrderState.OrderStateDateOfBirth;
+                       itm.OrderStateGenderId = _OrderState.OrderStateGenderId;
+                  */
+                _ = _context.OrderState.Update(itm);
+                _ = await _context.SaveChangesAsync();
                 trans.Commit();
 
             }
@@ -94,8 +94,8 @@ public class OrderStateController : ControllerBase, iController<OrderState>
         try
         {
             _OrderState.OrderStateId = Guid.NewGuid().ToString().ToUpper().Replace("-", "");
-            _context.OrderState.Add(_OrderState);
-            await _context.SaveChangesAsync();
+            _ = _context.OrderState.Add(_OrderState);
+            _ = await _context.SaveChangesAsync();
             trans.Commit();
         }
         catch (Exception ex)
