@@ -43,8 +43,8 @@ public class CustomerController : ControllerBase, iController<Customer>
     public async Task<IActionResult> Delete(string ID)
     {
         var itm = await _context.Customer.Where(x => x.CustomerId == ID).FirstOrDefaultAsync();
-        _context.Customer.Remove(itm);
-        await _context.SaveChangesAsync();
+        _ = _context.Customer.Remove(itm);
+        _ = await _context.SaveChangesAsync();
         return Ok();
     }
 
@@ -63,15 +63,15 @@ public class CustomerController : ControllerBase, iController<Customer>
             {
                 itm = _mapper.Map<Customer>(_Customer);
 
-                 /*
-                        itm.CustomerFirstName = _Customer.CustomerFirstName;
-                        itm.CustomerMiddleName = _Customer.CustomerMiddleName;
-                        itm.CustomerLastName = _Customer.CustomerLastName;
-                        itm.CustomerDateOfBirth = _Customer.CustomerDateOfBirth;
-                        itm.CustomerGenderId = _Customer.CustomerGenderId;
-                   */      
-                _context.Customer.Update(itm);
-                await _context.SaveChangesAsync();
+                /*
+                       itm.CustomerFirstName = _Customer.CustomerFirstName;
+                       itm.CustomerMiddleName = _Customer.CustomerMiddleName;
+                       itm.CustomerLastName = _Customer.CustomerLastName;
+                       itm.CustomerDateOfBirth = _Customer.CustomerDateOfBirth;
+                       itm.CustomerGenderId = _Customer.CustomerGenderId;
+                  */
+                _ = _context.Customer.Update(itm);
+                _ = await _context.SaveChangesAsync();
                 trans.Commit();
 
             }
@@ -94,8 +94,8 @@ public class CustomerController : ControllerBase, iController<Customer>
         try
         {
             _Customer.CustomerId = Guid.NewGuid().ToString().ToUpper().Replace("-", "");
-            _context.Customer.Add(_Customer);
-            await _context.SaveChangesAsync();
+            _ = _context.Customer.Add(_Customer);
+            _ = await _context.SaveChangesAsync();
             trans.Commit();
         }
         catch (Exception ex)
