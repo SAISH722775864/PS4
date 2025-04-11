@@ -8,13 +8,13 @@ namespace WebRestAPI.Controllers.UD;
 
 [ApiController]
 [Route("api/[controller]")]
-public class CustomerController : ControllerBase, iController<Customer>
+public class OrderStateController : ControllerBase, iController<OrderState>
 {
     private WebRestOracleContext _context;
     // Create a field to store the mapper object
     private readonly IMapper _mapper;
 
-    public CustomerController(WebRestOracleContext context, IMapper mapper)
+    public OrderStateController(WebRestOracleContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
@@ -25,55 +25,52 @@ public class CustomerController : ControllerBase, iController<Customer>
     public async Task<IActionResult> Get()
     {
 
-        List<Customer> lst = null;
-        lst = await _context.Customers.ToListAsync();
+        List<OrderState>? lst = null;
+        lst = await _context.OrderState.ToListAsync();
         return Ok(lst);
     }
-
 
     [HttpGet]
     [Route("Get/{ID}")]
     public async Task<IActionResult> Get(string ID)
     {
-        var itm = await _context.Customers.Where(x => x.CustomerId == ID).FirstOrDefaultAsync();
+        var itm = await _context.OrderState.Where(x => x.OrderStateId == ID).FirstOrDefaultAsync();
         return Ok(itm);
     }
-
 
     [HttpDelete]
     [Route("Delete/{ID}")]
     public async Task<IActionResult> Delete(string ID)
     {
-        var itm = await _context.Customers.Where(x => x.CustomerId == ID).FirstOrDefaultAsync();
-        _context.Customers.Remove(itm);
+        var itm = await _context.OrderState.Where(x => x.OrderStateId == ID).FirstOrDefaultAsync();
+        _context.OrderState.Remove(itm);
         await _context.SaveChangesAsync();
         return Ok();
     }
 
     [HttpPut]
-    public async Task<IActionResult> Put([FromBody] Customer _Customer)
+    public async Task<IActionResult> Put([FromBody] OrderState _OrderState)
     {
         var trans = _context.Database.BeginTransaction();
 
         try
         {
-            var itm = await _context.Customers.AsNoTracking()
-            .Where(x => x.CustomerId == _Customer.CustomerId)
+            var itm = await _context.OrderState.AsNoTracking()
+            .Where(x => x.OrderStateId == _OrderState.OrderStateId)
             .FirstOrDefaultAsync();
-
 
             if (itm != null)
             {
-                itm = _mapper.Map<Customer>(_Customer);
+                itm = _mapper.Map<OrderState>(_OrderState);
 
                  /*
-                        itm.CustomerFirstName = _Customer.CustomerFirstName;
-                        itm.CustomerMiddleName = _Customer.CustomerMiddleName;
-                        itm.CustomerLastName = _Customer.CustomerLastName;
-                        itm.CustomerDateOfBirth = _Customer.CustomerDateOfBirth;
-                        itm.CustomerGenderId = _Customer.CustomerGenderId;
+                        itm.OrderStateFirstName = _OrderState.OrderStateFirstName;
+                        itm.OrderStateMiddleName = _OrderState.OrderStateMiddleName;
+                        itm.OrderStateLastName = _OrderState.OrderStateLastName;
+                        itm.OrderStateDateOfBirth = _OrderState.OrderStateDateOfBirth;
+                        itm.OrderStateGenderId = _OrderState.OrderStateGenderId;
                    */      
-                _context.Customers.Update(itm);
+                _context.OrderState.Update(itm);
                 await _context.SaveChangesAsync();
                 trans.Commit();
 
@@ -90,14 +87,14 @@ public class CustomerController : ControllerBase, iController<Customer>
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] Customer _Customer)
+    public async Task<IActionResult> Post([FromBody] OrderState _OrderState)
     {
         var trans = _context.Database.BeginTransaction();
 
         try
         {
-            _Customer.CustomerId = Guid.NewGuid().ToString().ToUpper().Replace("-", "");
-            _context.Customers.Add(_Customer);
+            _OrderState.OrderStateId = Guid.NewGuid().ToString().ToUpper().Replace("-", "");
+            _context.OrderState.Add(_OrderState);
             await _context.SaveChangesAsync();
             trans.Commit();
         }
