@@ -43,8 +43,8 @@ public class GenderController : ControllerBase, iController<Gender>
     public async Task<IActionResult> Delete(string ID)
     {
         var itm = await _context.Gender.Where(x => x.GenderId == ID).FirstOrDefaultAsync();
-        _context.Gender.Remove(itm);
-        await _context.SaveChangesAsync();
+        _ = _context.Gender.Remove(itm);
+        _ = await _context.SaveChangesAsync();
         return Ok();
     }
 
@@ -63,15 +63,15 @@ public class GenderController : ControllerBase, iController<Gender>
             {
                 itm = _mapper.Map<Gender>(_Gender);
 
-                 /*
-                        itm.GenderFirstName = _Gender.GenderFirstName;
-                        itm.GenderMiddleName = _Gender.GenderMiddleName;
-                        itm.GenderLastName = _Gender.GenderLastName;
-                        itm.GenderDateOfBirth = _Gender.GenderDateOfBirth;
-                        itm.GenderGenderId = _Gender.GenderGenderId;
-                   */      
-                _context.Gender.Update(itm);
-                await _context.SaveChangesAsync();
+                /*
+                       itm.GenderFirstName = _Gender.GenderFirstName;
+                       itm.GenderMiddleName = _Gender.GenderMiddleName;
+                       itm.GenderLastName = _Gender.GenderLastName;
+                       itm.GenderDateOfBirth = _Gender.GenderDateOfBirth;
+                       itm.GenderGenderId = _Gender.GenderGenderId;
+                  */
+                _ = _context.Gender.Update(itm);
+                _ = await _context.SaveChangesAsync();
                 trans.Commit();
 
             }
@@ -94,8 +94,8 @@ public class GenderController : ControllerBase, iController<Gender>
         try
         {
             _Gender.GenderId = Guid.NewGuid().ToString().ToUpper().Replace("-", "");
-            _context.Gender.Add(_Gender);
-            await _context.SaveChangesAsync();
+            _ = _context.Gender.Add(_Gender);
+            _ = await _context.SaveChangesAsync();
             trans.Commit();
         }
         catch (Exception ex)
