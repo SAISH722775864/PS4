@@ -43,8 +43,8 @@ public class ProductController : ControllerBase, iController<Product>
     public async Task<IActionResult> Delete(string ID)
     {
         var itm = await _context.Product.Where(x => x.ProductId == ID).FirstOrDefaultAsync();
-        _context.Product.Remove(itm);
-        await _context.SaveChangesAsync();
+        _ = _context.Product.Remove(itm);
+        _ = await _context.SaveChangesAsync();
         return Ok();
     }
 
@@ -63,15 +63,15 @@ public class ProductController : ControllerBase, iController<Product>
             {
                 itm = _mapper.Map<Product>(_Product);
 
-                 /*
-                        itm.ProductFirstName = _Product.ProductFirstName;
-                        itm.ProductMiddleName = _Product.ProductMiddleName;
-                        itm.ProductLastName = _Product.ProductLastName;
-                        itm.ProductDateOfBirth = _Product.ProductDateOfBirth;
-                        itm.ProductGenderId = _Product.ProductGenderId;
-                   */      
-                _context.Product.Update(itm);
-                await _context.SaveChangesAsync();
+                /*
+                       itm.ProductFirstName = _Product.ProductFirstName;
+                       itm.ProductMiddleName = _Product.ProductMiddleName;
+                       itm.ProductLastName = _Product.ProductLastName;
+                       itm.ProductDateOfBirth = _Product.ProductDateOfBirth;
+                       itm.ProductGenderId = _Product.ProductGenderId;
+                  */
+                _ = _context.Product.Update(itm);
+                _ = await _context.SaveChangesAsync();
                 trans.Commit();
 
             }
@@ -94,8 +94,8 @@ public class ProductController : ControllerBase, iController<Product>
         try
         {
             _Product.ProductId = Guid.NewGuid().ToString().ToUpper().Replace("-", "");
-            _context.Product.Add(_Product);
-            await _context.SaveChangesAsync();
+            _ = _context.Product.Add(_Product);
+            _ = await _context.SaveChangesAsync();
             trans.Commit();
         }
         catch (Exception ex)
