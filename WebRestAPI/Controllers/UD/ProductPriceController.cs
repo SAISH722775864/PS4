@@ -8,13 +8,13 @@ namespace WebRestAPI.Controllers.UD;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ProductPriceController : ControllerBase, iController<ProductPrice>
+public class ProductStatusController : ControllerBase, iController<ProductStatus>
 {
     private WebRestOracleContext _context;
     // Create a field to store the mapper object
     private readonly IMapper _mapper;
 
-    public ProductPriceController(WebRestOracleContext context, IMapper mapper)
+    public ProductStatusController(WebRestOracleContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
@@ -25,8 +25,8 @@ public class ProductPriceController : ControllerBase, iController<ProductPrice>
     public async Task<IActionResult> Get()
     {
 
-        List<ProductPrice>? lst = null;
-        lst = await _context.ProductPrice.ToListAsync();
+        List<ProductStatus>? lst = null;
+        lst = await _context.ProductStatus.ToListAsync();
         return Ok(lst);
     }
 
@@ -34,7 +34,7 @@ public class ProductPriceController : ControllerBase, iController<ProductPrice>
     [Route("Get/{ID}")]
     public async Task<IActionResult> Get(string ID)
     {
-        var itm = await _context.ProductPrice.Where(x => x.ProductPriceId == ID).FirstOrDefaultAsync();
+        var itm = await _context.ProductStatus.Where(x => x.ProductStatusId == ID).FirstOrDefaultAsync();
         return Ok(itm);
     }
 
@@ -42,35 +42,35 @@ public class ProductPriceController : ControllerBase, iController<ProductPrice>
     [Route("Delete/{ID}")]
     public async Task<IActionResult> Delete(string ID)
     {
-        var itm = await _context.ProductPrice.Where(x => x.ProductPriceId == ID).FirstOrDefaultAsync();
-        _ = _context.ProductPrice.Remove(itm);
+        var itm = await _context.ProductStatus.Where(x => x.ProductStatusId == ID).FirstOrDefaultAsync();
+        _ = _context.ProductStatus.Remove(itm);
         _ = await _context.SaveChangesAsync();
         return Ok();
     }
 
     [HttpPut]
-    public async Task<IActionResult> Put([FromBody] ProductPrice _ProductPrice)
+    public async Task<IActionResult> Put([FromBody] ProductStatus _ProductStatus)
     {
         var trans = _context.Database.BeginTransaction();
 
         try
         {
-            var itm = await _context.ProductPrice.AsNoTracking()
-            .Where(x => x.ProductPriceId == _ProductPrice.ProductPriceId)
+            var itm = await _context.ProductStatus.AsNoTracking()
+            .Where(x => x.ProductStatusId == _ProductStatus.ProductStatusId)
             .FirstOrDefaultAsync();
 
             if (itm != null)
             {
-                itm = _mapper.Map<ProductPrice>(_ProductPrice);
+                itm = _mapper.Map<ProductStatus>(_ProductStatus);
 
                 /*
-                       itm.ProductPriceFirstName = _ProductPrice.ProductPriceFirstName;
-                       itm.ProductPriceMiddleName = _ProductPrice.ProductPriceMiddleName;
-                       itm.ProductPriceLastName = _ProductPrice.ProductPriceLastName;
-                       itm.ProductPriceDateOfBirth = _ProductPrice.ProductPriceDateOfBirth;
-                       itm.ProductPriceGenderId = _ProductPrice.ProductPriceGenderId;
+                       itm.ProductStatusFirstName = _ProductStatus.ProductStatusFirstName;
+                       itm.ProductStatusMiddleName = _ProductStatus.ProductStatusMiddleName;
+                       itm.ProductStatusLastName = _ProductStatus.ProductStatusLastName;
+                       itm.ProductStatusDateOfBirth = _ProductStatus.ProductStatusDateOfBirth;
+                       itm.ProductStatusGenderId = _ProductStatus.ProductStatusGenderId;
                   */
-                _ = _context.ProductPrice.Update(itm);
+                _ = _context.ProductStatus.Update(itm);
                 _ = await _context.SaveChangesAsync();
                 trans.Commit();
 
@@ -87,14 +87,14 @@ public class ProductPriceController : ControllerBase, iController<ProductPrice>
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] ProductPrice _ProductPrice)
+    public async Task<IActionResult> Post([FromBody] ProductStatus _ProductStatus)
     {
         var trans = _context.Database.BeginTransaction();
 
         try
         {
-            _ProductPrice.ProductPriceId = Guid.NewGuid().ToString().ToUpper().Replace("-", "");
-            _ = _context.ProductPrice.Add(_ProductPrice);
+            _ProductStatus.ProductStatusId = Guid.NewGuid().ToString().ToUpper().Replace("-", "");
+            _ = _context.ProductStatus.Add(_ProductStatus);
             _ = await _context.SaveChangesAsync();
             trans.Commit();
         }
