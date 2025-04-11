@@ -43,8 +43,8 @@ public class AddressController : ControllerBase, iController<Address>
     public async Task<IActionResult> Delete(string ID)
     {
         var itm = await _context.Address.Where(x => x.AddressId == ID).FirstOrDefaultAsync();
-        _context.Address.Remove(itm);
-        await _context.SaveChangesAsync();
+        _ = _context.Address.Remove(itm);
+        _ = await _context.SaveChangesAsync();
         return Ok();
     }
 
@@ -63,15 +63,15 @@ public class AddressController : ControllerBase, iController<Address>
             {
                 itm = _mapper.Map<Address>(_Address);
 
-                 /*
-                        itm.AddressFirstName = _Address.AddressFirstName;
-                        itm.AddressMiddleName = _Address.AddressMiddleName;
-                        itm.AddressLastName = _Address.AddressLastName;
-                        itm.AddressDateOfBirth = _Address.AddressDateOfBirth;
-                        itm.AddressGenderId = _Address.AddressGenderId;
-                   */      
-                _context.Address.Update(itm);
-                await _context.SaveChangesAsync();
+                /*
+                       itm.AddressFirstName = _Address.AddressFirstName;
+                       itm.AddressMiddleName = _Address.AddressMiddleName;
+                       itm.AddressLastName = _Address.AddressLastName;
+                       itm.AddressDateOfBirth = _Address.AddressDateOfBirth;
+                       itm.AddressGenderId = _Address.AddressGenderId;
+                  */
+                _ = _context.Address.Update(itm);
+                _ = await _context.SaveChangesAsync();
                 trans.Commit();
 
             }
@@ -94,8 +94,8 @@ public class AddressController : ControllerBase, iController<Address>
         try
         {
             _Address.AddressId = Guid.NewGuid().ToString().ToUpper().Replace("-", "");
-            _context.Address.Add(_Address);
-            await _context.SaveChangesAsync();
+            _ = _context.Address.Add(_Address);
+            _ = await _context.SaveChangesAsync();
             trans.Commit();
         }
         catch (Exception ex)
