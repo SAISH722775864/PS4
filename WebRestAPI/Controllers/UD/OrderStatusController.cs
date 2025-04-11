@@ -43,8 +43,8 @@ public class OrderStatusController : ControllerBase, iController<OrderStatus>
     public async Task<IActionResult> Delete(string ID)
     {
         var itm = await _context.OrderStatus.Where(x => x.OrderStatusId == ID).FirstOrDefaultAsync();
-        _context.OrderStatus.Remove(itm);
-        await _context.SaveChangesAsync();
+        _ = _context.OrderStatus.Remove(itm);
+        _ = await _context.SaveChangesAsync();
         return Ok();
     }
 
@@ -63,15 +63,15 @@ public class OrderStatusController : ControllerBase, iController<OrderStatus>
             {
                 itm = _mapper.Map<OrderStatus>(_OrderStatus);
 
-                 /*
-                        itm.OrderStatusFirstName = _OrderStatus.OrderStatusFirstName;
-                        itm.OrderStatusMiddleName = _OrderStatus.OrderStatusMiddleName;
-                        itm.OrderStatusLastName = _OrderStatus.OrderStatusLastName;
-                        itm.OrderStatusDateOfBirth = _OrderStatus.OrderStatusDateOfBirth;
-                        itm.OrderStatusGenderId = _OrderStatus.OrderStatusGenderId;
-                   */      
-                _context.OrderStatus.Update(itm);
-                await _context.SaveChangesAsync();
+                /*
+                       itm.OrderStatusFirstName = _OrderStatus.OrderStatusFirstName;
+                       itm.OrderStatusMiddleName = _OrderStatus.OrderStatusMiddleName;
+                       itm.OrderStatusLastName = _OrderStatus.OrderStatusLastName;
+                       itm.OrderStatusDateOfBirth = _OrderStatus.OrderStatusDateOfBirth;
+                       itm.OrderStatusGenderId = _OrderStatus.OrderStatusGenderId;
+                  */
+                _ = _context.OrderStatus.Update(itm);
+                _ = await _context.SaveChangesAsync();
                 trans.Commit();
 
             }
@@ -94,8 +94,8 @@ public class OrderStatusController : ControllerBase, iController<OrderStatus>
         try
         {
             _OrderStatus.OrderStatusId = Guid.NewGuid().ToString().ToUpper().Replace("-", "");
-            _context.OrderStatus.Add(_OrderStatus);
-            await _context.SaveChangesAsync();
+            _ = _context.OrderStatus.Add(_OrderStatus);
+            _ = await _context.SaveChangesAsync();
             trans.Commit();
         }
         catch (Exception ex)
