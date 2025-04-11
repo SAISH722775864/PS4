@@ -43,8 +43,8 @@ public class ProductStatusController : ControllerBase, iController<ProductStatus
     public async Task<IActionResult> Delete(string ID)
     {
         var itm = await _context.ProductStatus.Where(x => x.ProductStatusId == ID).FirstOrDefaultAsync();
-        _context.ProductStatus.Remove(itm);
-        await _context.SaveChangesAsync();
+        _ = _context.ProductStatus.Remove(itm);
+        _ = await _context.SaveChangesAsync();
         return Ok();
     }
 
@@ -63,15 +63,15 @@ public class ProductStatusController : ControllerBase, iController<ProductStatus
             {
                 itm = _mapper.Map<ProductStatus>(_ProductStatus);
 
-                 /*
-                        itm.ProductStatusFirstName = _ProductStatus.ProductStatusFirstName;
-                        itm.ProductStatusMiddleName = _ProductStatus.ProductStatusMiddleName;
-                        itm.ProductStatusLastName = _ProductStatus.ProductStatusLastName;
-                        itm.ProductStatusDateOfBirth = _ProductStatus.ProductStatusDateOfBirth;
-                        itm.ProductStatusGenderId = _ProductStatus.ProductStatusGenderId;
-                   */      
-                _context.ProductStatus.Update(itm);
-                await _context.SaveChangesAsync();
+                /*
+                       itm.ProductStatusFirstName = _ProductStatus.ProductStatusFirstName;
+                       itm.ProductStatusMiddleName = _ProductStatus.ProductStatusMiddleName;
+                       itm.ProductStatusLastName = _ProductStatus.ProductStatusLastName;
+                       itm.ProductStatusDateOfBirth = _ProductStatus.ProductStatusDateOfBirth;
+                       itm.ProductStatusGenderId = _ProductStatus.ProductStatusGenderId;
+                  */
+                _ = _context.ProductStatus.Update(itm);
+                _ = await _context.SaveChangesAsync();
                 trans.Commit();
 
             }
@@ -94,8 +94,8 @@ public class ProductStatusController : ControllerBase, iController<ProductStatus
         try
         {
             _ProductStatus.ProductStatusId = Guid.NewGuid().ToString().ToUpper().Replace("-", "");
-            _context.ProductStatus.Add(_ProductStatus);
-            await _context.SaveChangesAsync();
+            _ = _context.ProductStatus.Add(_ProductStatus);
+            _ = await _context.SaveChangesAsync();
             trans.Commit();
         }
         catch (Exception ex)
