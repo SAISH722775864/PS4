@@ -43,8 +43,8 @@ public class ProductPriceController : ControllerBase, iController<ProductPrice>
     public async Task<IActionResult> Delete(string ID)
     {
         var itm = await _context.ProductPrice.Where(x => x.ProductPriceId == ID).FirstOrDefaultAsync();
-        _context.ProductPrice.Remove(itm);
-        await _context.SaveChangesAsync();
+        _ = _context.ProductPrice.Remove(itm);
+        _ = await _context.SaveChangesAsync();
         return Ok();
     }
 
@@ -63,15 +63,15 @@ public class ProductPriceController : ControllerBase, iController<ProductPrice>
             {
                 itm = _mapper.Map<ProductPrice>(_ProductPrice);
 
-                 /*
-                        itm.ProductPriceFirstName = _ProductPrice.ProductPriceFirstName;
-                        itm.ProductPriceMiddleName = _ProductPrice.ProductPriceMiddleName;
-                        itm.ProductPriceLastName = _ProductPrice.ProductPriceLastName;
-                        itm.ProductPriceDateOfBirth = _ProductPrice.ProductPriceDateOfBirth;
-                        itm.ProductPriceGenderId = _ProductPrice.ProductPriceGenderId;
-                   */      
-                _context.ProductPrice.Update(itm);
-                await _context.SaveChangesAsync();
+                /*
+                       itm.ProductPriceFirstName = _ProductPrice.ProductPriceFirstName;
+                       itm.ProductPriceMiddleName = _ProductPrice.ProductPriceMiddleName;
+                       itm.ProductPriceLastName = _ProductPrice.ProductPriceLastName;
+                       itm.ProductPriceDateOfBirth = _ProductPrice.ProductPriceDateOfBirth;
+                       itm.ProductPriceGenderId = _ProductPrice.ProductPriceGenderId;
+                  */
+                _ = _context.ProductPrice.Update(itm);
+                _ = await _context.SaveChangesAsync();
                 trans.Commit();
 
             }
@@ -94,8 +94,8 @@ public class ProductPriceController : ControllerBase, iController<ProductPrice>
         try
         {
             _ProductPrice.ProductPriceId = Guid.NewGuid().ToString().ToUpper().Replace("-", "");
-            _context.ProductPrice.Add(_ProductPrice);
-            await _context.SaveChangesAsync();
+            _ = _context.ProductPrice.Add(_ProductPrice);
+            _ = await _context.SaveChangesAsync();
             trans.Commit();
         }
         catch (Exception ex)
